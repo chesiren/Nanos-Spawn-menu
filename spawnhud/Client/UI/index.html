@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+<link href="nanosui.css" rel="stylesheet" type="text/css">
+<style>
+body {
+    margin: 20px;
+    line-height: 26px;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+h2 {
+	padding-left: 10px;
+	line-height: 6px;
+}
+
+.container {
+    xmin-width: 900px;
+}
+
+.wrapper {
+    position: relative;
+    overflow: auto;
+}
+
+#top {
+    padding: 15px;
+}
+
+#menubar {
+    width: 200px;
+    float: left
+}
+
+#main {
+    padding: 10px;
+    margin: 0 210px;
+}
+
+#sidebar {
+    color: white;
+    padding: 10px;
+    width: 180px;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    position: absolute;
+}
+
+#bottom {
+    text-align: center;
+    padding: 10px;
+    font-size: 80%;
+    line-height: 14px;
+}
+
+#top h1, #top p, #menulist {
+    margin: 0;
+    padding: 0;
+	list-style-type: none;
+}
+
+.menuitem {
+	border: 1px solid rgba(212, 212, 212, 0.5);
+	outline: none;
+	padding: 2px;
+    background-color: rgba(241, 241, 241, 0.5);
+	cursor: pointer;
+	
+    list-style-type: none;
+}
+
+.menuitem:hover {
+	background-color: rgba(150, 150, 150, 0.7);
+	color: white;
+}
+
+.active {
+	background-color: rgba(100, 100, 100, 0.7);
+	color: white;
+	font-weight:bold;
+}
+
+.hide {
+	visibility: hidden;
+}
+
+a {
+    color: white;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+
+@media (max-width: 800px) {
+    #sidebar {
+        width: auto;
+        position: relative;
+    } 
+    #main {
+        margin-right: 0;
+    }    
+       
+}
+
+@media (max-width: 600px) {
+    #menubar {
+        width: auto;
+        float: none;
+    }
+    #main {
+        margin: 0;
+    }    
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: 19.4% 19.4% 19.4% 19.4% 19.4%;
+	grid-gap: 10px;
+	padding: 10px;
+}
+
+.grid-container > button {
+	background-color: rgba(255, 255, 255, 0.1);
+	text-align: center;
+	padding: 20px 0;
+	outline: 0;
+	color: white;
+	border: none;
+	font-size: 1vw;
+}
+
+.grid-container > button:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.grid-container > button:active {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+.grid-container > button:disabled {
+	background-color: rgba(0, 0, 0, 0.1);
+	color: grey;
+}
+
+#fitin {
+    overflow: hidden;
+    font-size: 1em;
+}
+
+.scrolldiv {
+	height: 600px;
+	overflow: auto;
+}
+
+.limit {
+	line-height: 15px;
+	border: none;
+	color: white;
+	width: 100%;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track on hover */
+::-webkit-scrollbar-track:hover {
+	background-color: rgb(255, 255, 255, 0.1);
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background-color: white; 
+	border-radius: 3px;
+	border: 1px solid black
+}
+</style>
+</head>
+<body>
+
+<div class="container wrapper blur">
+	<div id="top" class="bg1">
+		<h1>Nanos spawn menu</h1>
+		<p>Use the menu to spawn different kind of objects</p>
+	</div>
+	
+	<div class="wrapper bg3">
+		<div id="menubar">
+			<ul id="menulist">
+				<li class="button-title active" onclick="func('menuprops')">Props</li>
+				<li class="button-title" onclick="func('menubots')">Bots</li>
+				<li class="button-title" onclick="func('menuitems')">Items</li>
+				<li class="button-title" onclick="func('menuvehicles')">Vehicles</li>
+				<li class="button-title" onclick="func('menuweapons')">Weapons</li>
+			</ul>
+		</div>
+	
+		<div id="lists">
+			<div id="menuprops" class="menus">
+				<div id="main">
+					<h1>Props</h1>
+					<div class="scrolldiv bg2">
+						<h2>Basic shapes</h2>
+						<div class="grid-container" id="propscontainer">
+							<button id="fitin" onclick="spawn(this, 1)">SM_Cone</button> <!--Props/BasicShapes/SM_Cone-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Cube</button> <!--Props/BasicShapes/SM_Cube-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Cylinder</button> <!--Props/BasicShapes/SM_Cylinder-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Plane</button> <!--Props/BasicShapes/SM_Plane-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Sphere</button> <!--Props/BasicShapes/SM_Sphere-->
+
+							<button id="fitin" onclick="spawn(this, 1)">SM_Ball_VR</button> <!--Props/VRShapes/SM_Ball-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Cube_VR_01</button> <!--Props/VRShapes/SM_Cube_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Cube_VR_02</button> <!--Props/VRShapes/SM_Cube_02-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Cube_VR_03</button> <!--Props/VRShapes/SM_Cube_03-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Pyramid_VR</button> <!--Props/VRShapes/SM_Pyramid-->
+						</div>
+						
+						<h2>Misc props</h2>
+						<div class="grid-container" id="propscontainer">
+							<button id="fitin" onclick="spawn(this, 1)">SM_PlasticBarrel_01</button> <!--Art/City/Construction_Props/Mesh/SM_PlasticBarrel_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_RockingChair</button> <!--Art/City/House_Props/Meshes/SM_RockingChair-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_RoundStand</button> <!--Art/City/House_Props/Meshes/SM_RoundStand-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Bottle_01</button> <!--Art/Rural/InteriorDecoration/SM_Bottle_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Bottle_02</button> <!--Art/Rural/InteriorDecoration/SM_Bottle_02-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Bottle</button> <!--Art/Rural/Extra/SM_Bottle-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Bunny</button> <!--Art/City/House_Props/Meshes/SM_Bunny-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_CupC</button> <!--Art/City/House_Props/Meshes/KitchenWare/SM_CupC-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_OilLamp</button> <!--Art/Rural/InteriorDecoration/SM_OilLamp-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_PlierSet_01</button> <!--Art/City/Construction_Props/Mesh/SM_PlierSet_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_PliersSet_07</button> <!--Art/City/Construction_Props/Mesh/SM_PliersSet_07-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Saw_01</button> <!--Art/City/Construction_Props/Mesh/SM_Saw_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_BarrelTub</button> <!--Art/Rural/Extra/SM_BarrelTub-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_CoffeeTable</button> <!--Art/City/House_Props/Meshes/SM_CoffeeTable-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Crate_Base_01</button> <!--Art/City/Construction_Props/Mesh/SM_Crate_Base_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Crate_Lid_01</button> <!--Art/City/Construction_Props/Mesh/SM_Crate_Lid_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Toolbox_01</button> <!--Art/City/Construction_Props/Mesh/SM_Toolbox_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Toolbox_06</button> <!--Art/City/Construction_Props/Mesh/SM_Toolbox_06-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_VaseA</button> <!--Art/City/House_Props/Meshes/Vases/SM_VaseA-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_CupD</button> <!--Art/City/House_Props/Meshes/KitchenWare/SM_CupD-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Crate_01</button> <!--Art/City/Construction_Props/Mesh/SM_Crate_01-->
+
+							<button id="fitin" onclick="spawn(this, 1)">SM_WoodenTable</button> <!--Art/Rural/InteriorDecoration/SM_WoodenTable-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_WoodenChair</button> <!--Art/Rural/InteriorDecoration/SM_WoodenChair-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_TireLarge</button> <!--Art/Rural/Extra/SM_TireLarge-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Stool</button> <!--Art/Rural/InteriorDecoration/SM_Stool-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_TeaPot_Interior</button> <!--Art/Rural/InteriorDecoration/SM_TeaPot_Interior-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_OilDrum</button> <!--Art/Rural/ExteriorDecoration/SM_OilDrum-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Bucket5Gallon</button> <!--Art/Rural/Extra/SM_Bucket5Gallon-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Crate_07</button> <!--Art/Rural/Extra/SM_Crate_07-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Crate_03</button> <!--Art/Rural/InteriorDecoration/SM_Crate_03-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Crate_04</button> <!--Art/Rural/InteriorDecoration/SM_Crate_04-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Pot_01</button> <!--Art/Rural/InteriorDecoration/SM_Pot_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Pot_02</button> <!--Art/Rural/InteriorDecoration/SM_Pot_02-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Plate_Interior</button> <!--Art/Rural/InteriorDecoration/SM_Plate_Interior-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Barrel_02</button> <!--Art/Rural/Extra/SM_Barrel_02-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Bamboo_Roof45_Right</button> <!--Art/Rural/HouseModular/SM_Bamboo_Roof45_Right-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_MetalBucket_Interior_02</button> <!--Art/Rural/InteriorDecoration/SM_MetalBucket_Interior_02-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Basket_01</button> <!--Art/Rural/InteriorDecoration/SM_Basket_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Bamboo_Woodplank_01</button> <!--Art/Rural/Extra/SM_Bamboo_Woodplank_01-->
+						</div>
+						<h2>Accessories</h2>
+						<div class="grid-container" id="propscontainer">
+							<button id="fitin" onclick="spawn(this, 1)">SM_Beard_Extra</button> <!--Characters/Common/BodyParts/Beard/SM_Beard_Extra-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Beard_Middle</button> <!--Characters/Common/BodyParts/Beard/SM_Beard_Middle-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Beard_Mustache_01</button> <!--Characters/Common/BodyParts/Beard/SM_Beard_Mustache_01-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Beard_Mustache_02</button> <!--Characters/Common/BodyParts/Beard/SM_Beard_Mustache_02-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Beard_Side</button> <!--Characters/Common/BodyParts/Beard/SM_Beard_Side-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Hair_Long</button> <!--Characters/Common/BodyParts/Hair/Male/SM_Hair_Long-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Hair_Short</button> <!--Characters/Common/BodyParts/Hair/Male/SM_Hair_Short-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Hair_Kwang</button> <!--Characters/Common/BodyParts/Hair/Kwang/SM_Hair_Kwang-->
+
+							<button id="fitin" onclick="spawn(this, 1)">SM_AK47_Mag_Empty</button> <!--Weapons/Rifles/AK47/SM_AK47_Mag_Empty-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_AK74U_Mag_Empty</button> <!--Weapons/Rifles/AK74U/SM_AK74U_Mag_Empty-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_GE36_Mag_Empty</button> <!--Weapons/Rifles/GE36/SM_GE36_Mag_Empty-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Glock_Mag_Empty</button> <!--Weapons/Pistols/Glock/SM_Glock_Mag_Empty-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_DesertEagle_Mag_Empty</button> <!--Weapons/Pistols/DesertEagle/SM_DesertEagle_Mag_Empty-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_AP5_Mag_Empty</button> <!--Weapons/Rifles/AP5/SM_AP5_Mag_Empty-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_AR4_Mag_Empty</button> <!--Weapons/Rifles/AR4/SM_AR4_Mag_Empty-->
+
+							<button id="fitin" onclick="spawn(this, 1)">SM_T4_Sight</button> <!--Weapons/Common/Accessories/SM_T4_Sight-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Vertgrip</button> <!--Weapons/Common/Accessories/SM_Vertgrip-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Suppressor</button> <!--Weapons/Common/Accessories/SM_Suppressor5-->
+							<button id="fitin" onclick="spawn(this, 1)">SM_Scope_25x56_X</button> <!--Weapons/Common/Accessories/SM_Scope_25x56_X-->
+
+							<button id="fitin" onclick="spawn(this, 1)">SM_Grenade_G67</button> <!--Weapons/Grenades/G67/SM_G67-->
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="menubots" class="menus" style="display: none">
+				<div id="main">
+					<h1>Bots</h1>
+					<div class="scrolldiv bg2">
+						<h2>Humans</h2>
+						<div class="grid-container">
+							<button id="fitin" onclick="spawn(this, 2)">SK_Female</button> <!--Characters/Female/SK_Female-->
+							<button id="fitin" onclick="spawn(this, 2)">SK_Male</button> <!--Characters/Male/SK_Male-->
+							<button id="fitin" onclick="spawn(this, 2)">SK_Mannequin</button> <!--Characters/Mannequin/SK_Mannequin-->
+							<button id="fitin" onclick="spawn(this, 2)">SK_PostApocalyptic</button> <!--Characters/PostApocalyptic/SK_PostApocalyptic-->
+							<button id="fitin" onclick="spawn(this, 2)">SK_ClassicMale</button> <!--Characters/ClassicMale/SK_ClassicMale-->
+						</div>
+						
+						<h2>Bot weapons</h2>
+						<div class="grid-container">
+							<button id="fitin" onclick="spawn(this, 4, 80)">SK_AK47</button> <!--Weapons/Rifles/AK47/SK_AK47-->
+							<button id="fitin" onclick="spawn(this, 4, 80)">SK_AK74U</button> <!--Weapons/Rifles/AK74U/SK_AK74U-->
+							<button id="fitin" onclick="spawn(this, 4, 80)">SK_GE36</button> <!--Weapons/Rifles/GE36/SK_GE36-->
+							<button id="fitin" onclick="spawn(this, 4, 80)">SK_Glock</button> <!--Weapons/Pistols/Glock/SK_Glock-->
+							<button id="fitin" onclick="spawn(this, 4, 80)">SK_DesertEagle</button> <!--Weapons/Pistols/DesertEagle/SK_DesertEagle-->
+							<button id="fitin" onclick="spawn(this, 4, 80)">SK_AR4</button> <!--Weapons/Rifles/AR4/SK_AR4-->
+							<button id="fitin" onclick="spawn(this, 4, 80)">SK_Moss500</button> <!--Weapons/Shotguns/Moss500/SK_Moss500-->
+							<button id="fitin" onclick="spawn(this, 4, 80)">SK_AP5</button> <!--Weapons/Rifles/AP5/SK_AP5-->
+							<button id="fitin" onclick="spawn(this, 4, 80)">SK_SMG11</button> <!--Weapons/SMGs/SMG11/SK_SMG11-->
+						</div>
+						
+						<h2>Male cloth</h2>
+						<div class="grid-container">
+							<button id="fitin" onclick="spawn(this, 3, 11)">SK_Shirt</button> <!--Characters/Common/BodyParts/Clothes/Shirt/SK_Shirt-->
+							<button id="fitin" onclick="spawn(this, 3, 11)">SK_Underwear</button> <!--Characters/Common/BodyParts/Clothes/Underwear/SK_Underwear-->
+							<button id="fitin" onclick="spawn(this, 3, 21)">SK_Pants</button> <!--Characters/Common/BodyParts/Clothes/Pants/SK_Pants-->
+							<button id="fitin" onclick="spawn(this, 3, 30)">SK_Shoes_01</button> <!--Characters/Common/BodyParts/Clothes/Shoes/SK_Shoes_01-->
+							<button id="fitin" onclick="spawn(this, 3, 30)">SK_Shoes_02</button> <!--Characters/Common/BodyParts/Clothes/Shoes/SK_Shoes_02-->
+							<button id="fitin" onclick="spawn(this, 3, 41)">SK_Tie</button> <!--Characters/Common/BodyParts/Clothes/Tie/SK_Tie-->
+							
+							<button id="fitin" onclick="spawn(this, 3, 61)">SM_Beard_Extra</button> <!--Characters/Common/BodyParts/Beard/SM_Beard_Extra-->
+							<button id="fitin" onclick="spawn(this, 3, 61)">SM_Beard_Middle</button> <!--Characters/Common/BodyParts/Beard/SM_Beard_Middle-->
+							<button id="fitin" onclick="spawn(this, 3, 61)">SM_Beard_Mustache_01</button> <!--Characters/Common/BodyParts/Beard/SM_Beard_Mustache_01-->
+							<button id="fitin" onclick="spawn(this, 3, 61)">SM_Beard_Mustache_02</button> <!--Characters/Common/BodyParts/Beard/SM_Beard_Mustache_02-->
+							<button id="fitin" onclick="spawn(this, 3, 61)">SM_Beard_Side</button> <!--Characters/Common/BodyParts/Beard/SM_Beard_Side-->
+							<button id="fitin" onclick="spawn(this, 3, 71)">SM_Hair_Long</button> <!--Characters/Common/BodyParts/Hair/Male/SM_Hair_Long-->
+							<button id="fitin" onclick="spawn(this, 3, 71)">SM_Hair_Short</button> <!--Characters/Common/BodyParts/Hair/Male/SM_Hair_Short-->
+						</div>
+						
+						<h2>Female cloth</h2>
+						<div class="grid-container">
+							<button id="fitin" onclick="spawn(this, 3, 30)">SK_Shoes_01</button> <!--Characters/Common/BodyParts/Clothes/Shoes/SK_Shoes_01-->
+							<button id="fitin" onclick="spawn(this, 3, 30)">SK_Shoes_02</button> <!--Characters/Common/BodyParts/Clothes/Shoes/SK_Shoes_02-->
+							<button id="fitin" onclick="spawn(this, 3, 52)">SK_CasualSet</button> <!--Characters/Common/BodyParts/Clothes/CasualSet/SK_CasualSet-->
+							<button id="fitin" onclick="spawn(this, 3, 32)">SK_Sneakers</button> <!--Characters/Common/BodyParts/Clothes/Shoes/SK_Sneakers-->
+
+							<button id="fitin" onclick="spawn(this, 3, 72)">SM_Hair_Kwang</button> <!--Characters/Common/BodyParts/Hair/Kwang/SM_Hair_Kwang-->
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="menuitems" class="menus" style="display: none">
+				<div id="main">
+					<h1>Items</h1>
+					<div class="scrolldiv bg2">
+						<h2>Tools</h2>
+						<div class="grid-container">
+							<button id="fitin" onclick="spawn(this, 5)">BP_Grabable_Torch</button> <!--Core/Items/BP_Grabable_Torch.BP_Grabable_Torch_C-->
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="menuvehicles" class="menus" style="display: none">
+				<div id="main">
+					<h1>Vehicles</h1>
+					<div class="scrolldiv bg2">
+						<h2>Cars</h2>
+						<div class="grid-container">
+							<button id="fitin" onclick="spawn(this, 6)">BP_Vehicle_SUV</button> <!--Core/Vehicles/BP_Vehicle_SUV.BP_Vehicle_SUV_C-->
+							<button id="fitin" onclick="spawn(this, 6)">BP_Vehicle_Pickup</button> <!--Core/Vehicles/BP_Vehicle_Pickup.BP_Vehicle_Pickup_C-->
+							<button id="fitin" onclick="spawn(this, 6)">BP_Vehicle_Truck</button> <!--Core/Vehicles/BP_Vehicle_Truck.BP_Vehicle_Truck_C-->
+							<button id="fitin" onclick="spawn(this, 6)">BP_Vehicle_Truck_Chassis</button> <!--Core/Vehicles/BP_Vehicle_Truck_Chassis.BP_Vehicle_Truck_Chassis_C-->
+							<button id="fitin" onclick="spawn(this, 6)">BP_Vehicle_Hatchback</button> <!--Core/Vehicles/BP_Vehicle_Hatchback.BP_Vehicle_Hatchback_C-->
+							<button id="fitin" onclick="spawn(this, 6)">BP_Vehicle_SportCar</button> <!--Core/Vehicles/BP_Vehicle_SportCar.BP_Vehicle_SportCar_C-->
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="menuweapons" class="menus" style="display: none">
+				<div id="main">
+					<h1>Weapons</h1>
+					<div class="scrolldiv bg2">
+						<h2>Submachine guns</h2>
+						<div class="grid-container">
+							<button id="fitin" onclick="spawn(this, 7)">AK47</button>
+							<button id="fitin" onclick="spawn(this, 7)">AK74U</button>
+							<button id="fitin" onclick="spawn(this, 7)">GE36</button>
+							<button id="fitin" onclick="spawn(this, 7)">AR4</button>
+							<button id="fitin" onclick="spawn(this, 7)">AP5</button>
+							<button id="fitin" onclick="spawn(this, 7)">SMG11</button>
+						</div>
+						<h2>Pistols</h2>
+						<div class="grid-container">
+							<button id="fitin" onclick="spawn(this, 7)">Glock</button>
+							<button id="fitin" onclick="spawn(this, 7)">DesertEagle</button>
+						</div>
+						<h2>Shotguns</h2>
+						<div class="grid-container">
+							<button id="fitin" onclick="spawn(this, 7)">Moss500</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="sidebar" class="bg2">
+			<h3>Options</h3>
+			<button class="red" onclick="Events.Call('Cleanup', ' ')" disabled>Cleanup all objects</button>
+			<button class="green" onclick="Events.Call('Undo', ' ')" disabled>Undo object</button>
+			<button class="green" onclick="Events.Call('Possess', ' ')" disabled>Possess bot</button>
+			<button class="green" onclick="Events.Call('Remove', ' ')" disabled>Remove object</button>
+			<button class="green" onclick="Events.Call('Freeze', ' ')" disabled>Freeze/Unfreeze object</button>
+			<button class="green" onclick="Events.Call('Collision', ' ')" disabled>Enable/Disable collisions</button>
+			<h3>Limits</h3>
+			<div class="limit bg3">
+				<p>Props 0/20</p>
+				<p>Bots 0/20</p>
+				<p>Items 0/20</p>
+				<p>Vehicles 0/20</p>
+				<p>Weapons 0/20</p>
+			</div>
+		</div>
+	</div>  
+
+	<div id="bottom" class="bg1">
+		This package is still in development, if you encouter a bug or want to suggest a new feature, please open an issue on github ( <a href="https://github.com/chesiren/Nanos-Spawn-menu/issues">https://github.com/chesiren/Nanos-Spawn-menu/issues</a> )
+	</div>
+</div>
+
+<script>
+function spawn(object, type, sk_id) {
+	if (typeof sk_id === 'undefined') { 
+		sk_id = '00'; 
+	} else {
+		sk_id = sk_id.toString();
+	}
+	
+	var send = type + sk_id + object.innerHTML;
+	Events.Call("Spawn", send);
+}
+
+// Add active class to the current button (highlight it)
+var header = document.getElementById("menulist");
+var btns = header.getElementsByClassName("button-title"); // old: menuitem
+
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  });
+}
+
+// resize text
+$(function() {
+    $('#fitin div').css('font-size', '1em');
+    
+    while( $('#fitin div').height() > $('#fitin').height() ) {
+        $('#fitin div').css('font-size', (parseInt($('#fitin div').css('font-size')) - 1) + "px" );
+    }
+    
+});
+
+//menu list
+function func(id) {
+	var lists = document.getElementById("lists");
+	var menus = lists.getElementsByClassName("menus");
+	var x = document.getElementById(id);
+	
+	for (var i = 0; i < menus.length; i++) {
+		menus[i].style.display = "none";
+	}
+	
+	if (x.style.display === "none") {
+		x.style.display = "block";
+	} else {
+		x.style.display = "none";
+	}
+}
+</script>
+
+</body></html>
